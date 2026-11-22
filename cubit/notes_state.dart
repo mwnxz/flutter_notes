@@ -3,7 +3,6 @@ part of 'notes_cubit.dart';
 @immutable
 sealed class NotesState {}
 
-// ВАЖНО: Этот класс должен быть здесь
 class Note {
   final String text;
   final bool isImportant;
@@ -19,7 +18,7 @@ class Note {
 }
 
 final class NotesInitial extends NotesState {
-  final List<Note> notes; // Теперь список хранит объекты Note
+  final List<Note> notes;
   final String currentText;
   final int? editingIndex;
 
