@@ -29,7 +29,6 @@ class NotesApp extends StatelessWidget {
 class NotesScreen extends StatelessWidget {
   const NotesScreen({super.key});
 
-  // Функция для показа полного текста (по обычному нажатию)
   void _showFullText(BuildContext context, Note note) {
     showDialog(
       context: context,
@@ -112,24 +111,20 @@ class NotesScreen extends StatelessWidget {
                               final note = state.notes[index];
 
                               return Dismissible(
-                                key: ValueKey(note.text + index.toString()), // Уникальный ключ
-                                // Свайп влево - удаление
+                                key: ValueKey(note.text + index.toString()),
                                 direction: DismissDirection.horizontal,
                                 confirmDismiss: (direction) async {
                                   if (direction == DismissDirection.endToStart) {
-                                    // Удаление
                                     return true;
                                   } else if (direction == DismissDirection.startToEnd) {
-                                    // Свайп вправо - сброс важности
                                     if (note.isImportant) {
                                       context.read<NotesCubit>().resetImportant(index);
                                     }
-                                    return false; // Не удаляем карточку
+                                    return false;
                                   }
                                   return false;
                                 },
                                 onDismissed: (direction) {
-                                  // Если свайп влево (удаление)
                                   if (direction == DismissDirection.endToStart) {
                                     context.read<NotesCubit>().deleteNote(index);
                                   }
@@ -147,13 +142,10 @@ class NotesScreen extends StatelessWidget {
                                   child: const Icon(Icons.delete, color: Colors.white),
                                 ),
                                 child: GestureDetector(
-                                  // ОБЫЧНОЕ НАЖАТИЕ - просмотр
                                   onTap: () => _showFullText(context, note),
-                                  // ДВОЙНОЕ НАЖАТИЕ - важность
                                   onDoubleTap: () {
                                     context.read<NotesCubit>().toggleImportant(index);
                                   },
-                                  // ДОЛГОЕ НАЖАТИЕ - редактирование
                                   onLongPress: () {
                                     context.read<NotesCubit>().editNote(index);
                                   },
